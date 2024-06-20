@@ -1,21 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Inicio from "./pages/Inicio";
 import Favoritos from "pages/Favoritos";
-import Cabecalho from "components/Cabecalho";
-import Footer from "components/Footer";
-import Container from "components/Container";
+import Player from "components/Player";
+import NaoEncontrada from "pages/NaoEncontara";
+import PaginaPadrao from "pages/PaginaPadrao";
 
 function AppRoutes() {
   return (
     <BrowserRouter>
-      <Cabecalho />
-      <Container>
-        <Routes>
-          <Route path="/" element={<Inicio />} />
-          <Route path="/favoritos" element={<Favoritos />} />
-        </Routes>
-      </Container>
-      <Footer />
+      <Routes>
+        <Route path="/" element={<PaginaPadrao />}>
+          <Route index element={<Inicio />} />
+          <Route path="favoritos" element={<Favoritos />} />
+          <Route path=":id" element={<Player />} />
+          <Route path="*" element={<NaoEncontrada />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
