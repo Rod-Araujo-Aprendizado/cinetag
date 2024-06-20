@@ -2,14 +2,23 @@ import Banner from "components/Banner";
 import styles from "./Player.module.css";
 import Titulo from "components/Banner/Titulo/titulo";
 import { useParams } from "react-router-dom";
-import videos from "json/db.json";
 import NaoEncontrada from "pages/NaoEncontara";
+import { useEffect, useState } from "react";
 
 export default function Player() {
+  const [video, setVideo] = useState();
   const parametros = useParams();
-  const video = videos.find((video) => {
-    return video.id === Number(parametros.id);
-  });
+
+  useEffect(() => {
+    fetch(
+      `https://my-json-server.typicode.com/Rod-Araujo-Aprendizado/cinetag-db/videos?id=${parametros.id}`
+    )
+      .then((resposta) => resposta.json())
+      .then((dados) => {
+        setVideo(...dados);
+      });
+  }, []);
+
   if (!video) {
     return <NaoEncontrada />;
   }
